@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameOfLife extends JFrame {
 
-    public static int size = 20;
+    public static int size = 50;
 
     private Universe universe;
     private final Map map;
@@ -15,35 +15,43 @@ public class GameOfLife extends JFrame {
     private final Timer timer;
     private final JToggleButton toggle;
     private final JButton reset;
+    private int speed = 100;
 
     public GameOfLife() {
 
         super("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
         JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
+        controlPanel.setBackground(Color.decode("#A35200"));
 
         genLabel = new JLabel("Generation #");
         genLabel.setName("GenerationLabel");
+        genLabel.setForeground(Color.WHITE);
+        ImageIcon genIcon = new ImageIcon("resources/gen-24.png");
+        genLabel.setIcon(genIcon);
         controlPanel.add(genLabel);
 
         aliveLabel = new JLabel("Alive: ");
         aliveLabel.setName("AliveLabel");
-        aliveLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 25, 0));
+        aliveLabel.setForeground(Color.WHITE);
+        ImageIcon aliveIcon = new ImageIcon("resources/alive-blue-24.png");
+        aliveLabel.setIcon(aliveIcon);
         controlPanel.add(aliveLabel);
 
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));
-        controlPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 20));
-
-        add(controlPanel);
+        add(controlPanel, BorderLayout.NORTH);
 
         map = new Map();
-        add(map);
+        add(map, BorderLayout.CENTER);
 
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+
+        pack();
         setVisible(true);
 
-        timer = new Timer(500, (actionEvent) -> {
+        timer = new Timer(speed, (actionEvent) -> {
 
             universe = Generation.getNextGeneration(universe);
             genLabel.setText("Generation #" + genNo.value++);
@@ -85,7 +93,7 @@ public class GameOfLife extends JFrame {
 
         reset();
         timer.start();
-        pack();
+
     }
 
     private void reset() {
