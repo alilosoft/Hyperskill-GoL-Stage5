@@ -15,8 +15,9 @@ public class Map extends JPanel {
     public Map() {
         super();
         setBackground(deadCellColor);//#CC6600
-        setPreferredSize(new Dimension(400, 400));
-        setBorder(BorderFactory.createEmptyBorder(5, 7, 7, 7));
+
+
+
     }
 
     public Universe getUniverse() {

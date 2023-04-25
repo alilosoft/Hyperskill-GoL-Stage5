@@ -44,9 +44,14 @@ public class GameOfLife extends JFrame {
 
         add(controlPanel, BorderLayout.NORTH);
 
-        map = new Map();
-        add(map, BorderLayout.CENTER);
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setPreferredSize(new Dimension(500, 500));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(Color.decode("#FF972F"));
+        add(mainPanel, BorderLayout.CENTER);
 
+        map = new Map();
+        mainPanel.add(map);
 
         pack();
         setVisible(true);
