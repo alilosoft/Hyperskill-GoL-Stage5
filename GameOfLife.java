@@ -70,6 +70,10 @@ public class GameOfLife extends JFrame {
         // speed control
         JLabel speedIcon = new JLabel(new ImageIcon("./resources/speed-24.png"));
         JSlider speedSlider = new JSlider(0, 250, 125);
+        speedSlider.addChangeListener(e -> {
+            speed = 250 - speedSlider.getValue() + 50;
+            timer.setDelay(speed);
+        });
         speedSlider.setOpaque(false);
         speedSlider.setPreferredSize(new Dimension(150, 24));
         buttonsPanel.add(speedIcon);
