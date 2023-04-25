@@ -15,7 +15,7 @@ public class GameOfLife extends JFrame {
     private final Timer timer;
     private final JToggleButton playBtn;
     private final JButton resetBtn;
-    private int speed = 75;
+    private int speed = 175;
 
     public GameOfLife() {
 
