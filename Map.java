@@ -43,8 +43,8 @@ public class Map extends JPanel {
             for (int j = 0; j < GameOfLife.size; j++) {
                 //g.drawRect(j * w, i * h, w, h);
                 if (map[i][j]) {
-                    //g.fillRoundRect(j * w, i * h, w, h, 7, 7);
-                    g.fillOval(j * w, i * h, w, h);
+                    g.fillRoundRect(j * w, i * h, w, h, 3, 3);
+                    //g.fillOval(j * w, i * h, w, h);
                 }
             }
         }
