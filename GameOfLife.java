@@ -13,9 +13,9 @@ public class GameOfLife extends JFrame {
     private final JLabel genLabel;
     private final JLabel aliveLabel;
     private final Timer timer;
-    private final JToggleButton toggle;
-    private final JButton reset;
-    private int speed = 100;
+    private final JToggleButton playBtn;
+    private final JButton resetBtn;
+    private int speed = 75;
 
     public GameOfLife() {
 
@@ -41,7 +41,7 @@ public class GameOfLife extends JFrame {
         ImageIcon aliveIcon = new ImageIcon("resources/alive-blue-24.png");
         aliveLabel.setIcon(aliveIcon);
         controlPanel.add(aliveLabel);
-
+        controlPanel.add(Box.createHorizontalStrut(32));
         add(controlPanel, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -53,39 +53,63 @@ public class GameOfLife extends JFrame {
         map = new Map();
         mainPanel.add(map);
 
-        pack();
-        setVisible(true);
-
         timer = new Timer(speed, (actionEvent) -> {
 
             universe = Generation.getNextGeneration(universe);
-            genLabel.setText("Generation #" + genNo.value++);
+            genLabel.setText("Generation: " + genNo.value++);
             aliveLabel.setText("Alive: " + universe.getAlive());
             map.setUniverse(universe);
             map.repaint();
 
         });
 
-        toggle = new JToggleButton(" Pause ");
-        toggle.setName("PlayToggleButton");
-        controlPanel.add(toggle);
-        toggle.addActionListener(actionEvent -> {
 
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        buttonsPanel.setOpaque(false);
+
+        // speed control
+        JLabel speedIcon = new JLabel(new ImageIcon("./resources/speed-24.png"));
+        JSlider speedSlider = new JSlider(0, 250, 125);
+        speedSlider.setOpaque(false);
+        speedSlider.setPreferredSize(new Dimension(150, 24));
+        buttonsPanel.add(speedIcon);
+        buttonsPanel.add(speedSlider);
+        buttonsPanel.add(Box.createHorizontalStrut(24));
+
+
+        playBtn = new JToggleButton();
+        playBtn.setName("PlayToggleButton");
+        // make it transparent
+        playBtn.setOpaque(false);
+        playBtn.setContentAreaFilled(false);
+        playBtn.setBorderPainted(false);
+        playBtn.setMargin(new Insets(0,0,0,0));
+        // set icons
+        ImageIcon playIcon = new ImageIcon("./resources/play-24.png");
+        ImageIcon pauseIcon = new ImageIcon("./resources/pause-24.png");
+        playBtn.setIcon(pauseIcon);
+        playBtn.addActionListener(actionEvent -> {
             if (timer.isRunning()) {
                 timer.stop();
-                toggle.setText("Resume");
+                playBtn.setIcon(playIcon);
             } else {
                 timer.restart();
-                toggle.setText(" Pause ");
+                playBtn.setIcon(pauseIcon);
             }
         });
+        buttonsPanel.add(playBtn);
 
-        controlPanel.add(new JLabel(" "));
-
-        reset = new JButton("Reset");
-        reset.setName("ResetButton");
-        controlPanel.add(reset);
-        reset.addActionListener(actionEvent -> {
+        resetBtn = new JButton();
+        resetBtn.setName("ResetButton");
+        // make it transparent
+        resetBtn.setOpaque(false);
+        resetBtn.setContentAreaFilled(false);
+        resetBtn.setBorderPainted(false);
+        resetBtn.setMargin(new Insets(0,0,0,0));
+        // set icon
+        ImageIcon resetIcon = new ImageIcon("./resources/repeat-24.png");
+        resetBtn.setIcon(resetIcon);
+        resetBtn.addActionListener(actionEvent -> {
 
             if (timer.isRunning()) {
                 timer.stop();
@@ -95,10 +119,14 @@ public class GameOfLife extends JFrame {
                 reset();
             }
         });
+        buttonsPanel.add(resetBtn);
+
+        controlPanel.add(buttonsPanel);
 
         reset();
         timer.start();
-
+        pack();
+        setVisible(true);
     }
 
     private void reset() {
@@ -107,7 +135,7 @@ public class GameOfLife extends JFrame {
 
         universe = Generation.getInitialGeneration(size);
 
-        genLabel.setText("Generation #" + genNo.value++);
+        genLabel.setText("Generation: " + genNo.value++);
         aliveLabel.setText("Alive: " + universe.getAlive());
         map.setUniverse(universe);
         map.repaint();

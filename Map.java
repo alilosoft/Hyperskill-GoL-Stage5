@@ -15,9 +15,6 @@ public class Map extends JPanel {
     public Map() {
         super();
         setBackground(deadCellColor);//#CC6600
-
-
-
     }
 
     public Universe getUniverse() {
