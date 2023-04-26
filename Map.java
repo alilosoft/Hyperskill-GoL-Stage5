@@ -50,7 +50,7 @@ public class Map extends JPanel {
                 g.setColor(bgColor); // draw the grid
                 int x = j * w + offsetX;
                 int y = i * h + offsetY;
-                //g.drawRect(x, y, w, h);
+                g.drawRect(x, y, w, h);
                 if (map[i][j]) {
                     g.setColor(aliveCellColor);
                     g.fillRect(x, y, w, h);
