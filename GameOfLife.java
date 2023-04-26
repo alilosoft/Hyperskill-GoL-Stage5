@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameOfLife extends JFrame {
 
-    public static int size = 35;
+    public static int size = 30;
 
     private Universe universe;
     private final Map map;
@@ -24,9 +24,20 @@ public class GameOfLife extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        // cells grid
+        map = new Map();
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+        //mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(Color.decode("#FF972F"));
+        mainPanel.add(map);
+
+        // controls
+        Box controlPanel = new Box(BoxLayout.X_AXIS);
+        add(controlPanel, BorderLayout.NORTH);
         controlPanel.setBackground(Color.decode("#A35200"));
+        controlPanel.setOpaque(true);
+        controlPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         genLabel = new JLabel("Generation #");
         genLabel.setName("GenerationLabel");
@@ -34,6 +45,7 @@ public class GameOfLife extends JFrame {
         ImageIcon genIcon = new ImageIcon("resources/gen-24.png");
         genLabel.setIcon(genIcon);
         controlPanel.add(genLabel);
+        controlPanel.add(Box.createHorizontalStrut(8));
 
         aliveLabel = new JLabel("Alive: ");
         aliveLabel.setName("AliveLabel");
@@ -41,17 +53,7 @@ public class GameOfLife extends JFrame {
         ImageIcon aliveIcon = new ImageIcon("resources/alive-blue-24.png");
         aliveLabel.setIcon(aliveIcon);
         controlPanel.add(aliveLabel);
-        controlPanel.add(Box.createHorizontalStrut(16));
-        add(controlPanel, BorderLayout.NORTH);
-
-        JPanel mainPanel = new JPanel(new BorderLayout());
-
-        //mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        mainPanel.setBackground(Color.decode("#FF972F"));
-        add(mainPanel, BorderLayout.CENTER);
-
-        map = new Map();
-        mainPanel.add(map);
+        controlPanel.add(Box.createHorizontalGlue());
 
         timer = new Timer(speed, (actionEvent) -> {
 
@@ -63,10 +65,6 @@ public class GameOfLife extends JFrame {
 
         });
 
-
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        buttonsPanel.setOpaque(false);
-
         // speed control
         JLabel speedIcon = new JLabel(new ImageIcon("./resources/speed-24.png"));
         JSlider speedSlider = new JSlider(0, 250, 125);
@@ -75,20 +73,16 @@ public class GameOfLife extends JFrame {
             timer.setDelay(speed);
         });
         speedSlider.setOpaque(false);
-        speedSlider.setPreferredSize(new Dimension(100, 24));
-        buttonsPanel.add(speedIcon);
-        buttonsPanel.add(speedSlider);
-        //buttonsPanel.add(Box.createHorizontalStrut(1));
-
+        speedSlider.setMaximumSize(new Dimension(100, 24));
+        controlPanel.add(speedIcon);
+        controlPanel.add(speedSlider);
 
         playBtn = new JToggleButton();
         playBtn.setName("PlayToggleButton");
-        // make it transparent
         playBtn.setOpaque(false);
         playBtn.setContentAreaFilled(false);
         playBtn.setBorderPainted(false);
-        playBtn.setMargin(new Insets(0,0,0,0));
-        // set icons
+        playBtn.setMargin(new Insets(0, 0, 0, 0));
         ImageIcon playIcon = new ImageIcon("./resources/play-24.png");
         ImageIcon pauseIcon = new ImageIcon("./resources/pause-24.png");
         playBtn.setIcon(pauseIcon);
@@ -101,20 +95,17 @@ public class GameOfLife extends JFrame {
                 playBtn.setIcon(pauseIcon);
             }
         });
-        buttonsPanel.add(playBtn);
+        controlPanel.add(playBtn);
 
         resetBtn = new JButton();
         resetBtn.setName("ResetButton");
-        // make it transparent
         resetBtn.setOpaque(false);
         resetBtn.setContentAreaFilled(false);
         resetBtn.setBorderPainted(false);
-        resetBtn.setMargin(new Insets(0,0,0,0));
-        // set icon
+        resetBtn.setMargin(new Insets(0, 0, 0, 0));
         ImageIcon resetIcon = new ImageIcon("./resources/repeat-24.png");
         resetBtn.setIcon(resetIcon);
         resetBtn.addActionListener(actionEvent -> {
-
             if (timer.isRunning()) {
                 timer.stop();
                 reset();
@@ -123,9 +114,7 @@ public class GameOfLife extends JFrame {
                 reset();
             }
         });
-        buttonsPanel.add(resetBtn);
-
-        controlPanel.add(buttonsPanel);
+        controlPanel.add(resetBtn);
 
         reset();
         timer.start();
