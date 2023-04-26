@@ -15,7 +15,9 @@ public class Map extends JPanel {
     public Map() {
         super();
         setBackground(deadCellColor);//#CC6600
+        //setPreferredSize(new Dimension(450, 450));
         setPreferredSize(new Dimension(500, 500));
+
     }
 
     public Universe getUniverse() {
@@ -25,6 +27,8 @@ public class Map extends JPanel {
     public void setUniverse(Universe universe) {
         this.universe = universe;
     }
+
+
 
     @Override
     public void paint(Graphics g) {
@@ -36,17 +40,20 @@ public class Map extends JPanel {
         }
 
         int h = getHeight() / GameOfLife.size;
+        int offsetY = (getHeight() % GameOfLife.size) / 2;
         int w = getWidth() / GameOfLife.size;
+        int offsetX = (getWidth() % GameOfLife.size) / 2;
+
         boolean[][] map = universe.getMap();
-
-
         for (int i = 0; i < GameOfLife.size; i++) {
             for (int j = 0; j < GameOfLife.size; j++) {
                 g.setColor(bgColor); // draw the grid
-                g.drawRect(j * w, i * h, w, h);
+                int x = j * w + offsetX;
+                int y = i * h + offsetY;
+                g.drawRect(x, y, w, h);
                 if (map[i][j]) {
                     g.setColor(aliveCellColor);
-                    g.fillRect(j * w, i * h, w, h);
+                    g.fillRect(x, y, w, h);
                     //g.fillOval(j * w, i * h, w, h);
                 }
             }

@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameOfLife extends JFrame {
 
-    public static int size = 50;
+    public static int size = 35;
 
     private Universe universe;
     private final Map map;
@@ -25,7 +25,7 @@ public class GameOfLife extends JFrame {
         setLayout(new BorderLayout());
 
         JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
+        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         controlPanel.setBackground(Color.decode("#A35200"));
 
         genLabel = new JLabel("Generation #");
@@ -41,12 +41,12 @@ public class GameOfLife extends JFrame {
         ImageIcon aliveIcon = new ImageIcon("resources/alive-blue-24.png");
         aliveLabel.setIcon(aliveIcon);
         controlPanel.add(aliveLabel);
-        controlPanel.add(Box.createHorizontalStrut(32));
+        controlPanel.add(Box.createHorizontalStrut(16));
         add(controlPanel, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        //mainPanel.setPreferredSize(new Dimension(500, 500));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        //mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.setBackground(Color.decode("#FF972F"));
         add(mainPanel, BorderLayout.CENTER);
 
@@ -75,10 +75,10 @@ public class GameOfLife extends JFrame {
             timer.setDelay(speed);
         });
         speedSlider.setOpaque(false);
-        speedSlider.setPreferredSize(new Dimension(150, 24));
+        speedSlider.setPreferredSize(new Dimension(100, 24));
         buttonsPanel.add(speedIcon);
         buttonsPanel.add(speedSlider);
-        buttonsPanel.add(Box.createHorizontalStrut(24));
+        //buttonsPanel.add(Box.createHorizontalStrut(1));
 
 
         playBtn = new JToggleButton();
