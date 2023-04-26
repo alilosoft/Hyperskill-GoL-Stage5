@@ -53,6 +53,7 @@ public class GameOfLife extends JFrame {
         ImageIcon aliveIcon = new ImageIcon("resources/alive-blue-24.png");
         aliveLabel.setIcon(aliveIcon);
         controlPanel.add(aliveLabel);
+        controlPanel.add(Box.createHorizontalStrut(8));
         controlPanel.add(Box.createHorizontalGlue());
 
         timer = new Timer(speed, (actionEvent) -> {
