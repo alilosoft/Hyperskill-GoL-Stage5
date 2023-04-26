@@ -53,8 +53,8 @@ public class Map extends JPanel {
                 //g.drawRect(x, y, w, h);
                 if (map[i][j]) {
                     g.setColor(aliveCellColor);
-                    g.fillRect(x, y, w, h);
-                    //g.fillOval(j * w, i * h, w, h);
+                    //g.fillRect(x, y, w, h);
+                    g.fillOval(x, y, w, h);
                 }
             }
         }
